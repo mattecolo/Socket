@@ -21,5 +21,5 @@ with socket.socket(socket.AF_INET,socket.SOCK_STREAM) as s:
             print(data.decode())
             break
         else:
-            print("Stringa modificata",data.decode())
+            print("Stringa modificata", data.decode())
         #Fine parte client
