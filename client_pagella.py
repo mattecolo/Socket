@@ -13,19 +13,20 @@ with socket.socket(socket.AF_INET,socket.SOCK_STREAM) as s:
         messaggio={
             'operazione' : operazione
         }
+        messaggio=json.dumps(messaggio)
         s.sendall(messaggio.encode("UTF-8"))
         #UTF-8 è la famiglia dei caratteri, utilizzato anche in HTML
         data=s.recv(1024)
+        data=data.decode()
         if operazione=='#lista':
-            messaggio=json.dumps(messaggio)
             deserialized_dict=json.loads(data)#decodifica dopo aver ricevuto
+            print(deserialized_dict)
         elif operazione.find('#set') != -1:
-            deserialized_dict=json.loads(data)
+            print(data)
         elif operazione=='#close':
             print("Connessione chisa")
             break
         else:
             deserialized_dict(data.decode())
         print("\n")
-        print(deserialized_dict,"\n")
         #Fine parte client
