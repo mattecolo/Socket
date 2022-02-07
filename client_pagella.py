@@ -13,11 +13,11 @@ with socket.socket(socket.AF_INET,socket.SOCK_STREAM) as s:
         messaggio={
             'operazione' : operazione
         }
-        messaggio=json.dumps(messaggio)#Trasforma l'oggetto in stringa
         s.sendall(messaggio.encode("UTF-8"))
         #UTF-8 è la famiglia dei caratteri, utilizzato anche in HTML
         data=s.recv(1024)
-        if operazione.find('#lista') != -1:
+        if operazione=='#lista':
+            messaggio=json.dumps(messaggio)
             deserialized_dict=json.loads(data)#decodifica dopo aver ricevuto
         elif operazione.find('#set') != -1:
             deserialized_dict=json.loads(data)
