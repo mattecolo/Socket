@@ -17,7 +17,6 @@ with socket.socket(socket.AF_INET,socket.SOCK_STREAM) as s:
                 }
     with clientsocket as cs:
         while True:
-            clientsocket, address=s.accept()#accetta la conversione
             print("Connessione da ", address)
             while True:
                 data=cs.recv(1024)
@@ -26,11 +25,12 @@ with socket.socket(socket.AF_INET,socket.SOCK_STREAM) as s:
                 data=data.decode()
                 data=data.strip()
                 data=json.loads(data)
-                print ("[*] Recived: %s" % data)
-                if data == '#list':
+                comando=data['operazione']
+                print ("[*] Recived: %s" % comando)
+                if comando == '#list':
                     serialized_stud = json.dumps(students)
                     cs.sendall(serialized_stud.encode("UTF-8"))
-                elif data.find('#set') != -1:
+                elif comando.find('#set') != -1:
                     inserimento=data.split(delim='/')
                     controllo_pres=inserimento[1]
                     if(controllo_pres in students):
@@ -38,7 +38,7 @@ with socket.socket(socket.AF_INET,socket.SOCK_STREAM) as s:
                     else:
                         students[inserimento[1]]=[]
                         cs.sendall(students.encode("UTF-8"))
-                elif data.find('#get') != -1:
+                elif comando.find('#get') != -1:
                     inserimento=data.split(delim='/')
                     controllo_pres=inserimento[1]
                     if(controllo_pres in students):
@@ -46,7 +46,7 @@ with socket.socket(socket.AF_INET,socket.SOCK_STREAM) as s:
                         cs.sendall(students.encode("UTF-8"))
                     else:
                         cs.sendall("Studente non presente".encode("UTF-8"))
-                elif data.find('#put') != -1:
+                elif comando.find('#put') != -1:
                     inserimento=data.split(delim='/')
                     controllo_pres=inserimento[1]
                     controllo_materia=inserimento[2]

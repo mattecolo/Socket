@@ -20,7 +20,7 @@ with socket.socket(socket.AF_INET,socket.SOCK_STREAM) as s:
         if operazione=='#list':
             print(data.decode())
             deserialized_dict=json.loads(data)#decodifica dopo aver ricevuto
-        elif data.find('#set') != -1:
+        elif operazione.find('#set') != -1:
             deserialized_dict=json.loads(data)#decodifica dopo aver ricevuto
         elif operazione=='#close':
             print("Connessione chisa")
