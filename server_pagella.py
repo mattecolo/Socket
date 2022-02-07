@@ -69,7 +69,7 @@ with socket.socket(socket.AF_INET,socket.SOCK_STREAM) as s:
                     break
                     #no
                 print(cs.getpeername())
-                pp=pprint.PrettyPrinter(indent=4)
-                pp.pprint(students)
+                #pp=pprint.PrettyPrinter(indent=4)
+                #pp.pprint(students)
             cs.close()
                 #Fine parte server

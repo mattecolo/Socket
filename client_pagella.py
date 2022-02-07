@@ -9,7 +9,7 @@ with socket.socket(socket.AF_INET,socket.SOCK_STREAM) as s:
     #STREAM: TCP. Indica la connessione, per l'appunto
     s.connect((HOST, PORT))
     while True:
-        operazione=input("#list : per vedere i voti inseriti /n #set /nomestudente : per inserire uno studente /n #put /nomestudente/materia/voto/ore /n #get /nomestudente : per richiedere i voti di uno studente /n #exit : per chiudere la connessione con il server /n #close: per chiudere la connessione con il server e per spegnerlo")
+        operazione=input("Comandi disponibili: \n#list : per vedere i voti inseriti \n #set /nomestudente : per inserire uno studente \n #put /nomestudente/materia/voto/ore \n #get /nomestudente : per richiedere i voti di uno studente \n #exit : per chiudere la connessione con il server \n #close: per chiudere la connessione con il server e per spegnerlo\n")
         messaggio={
             'operazione' : operazione
         }
@@ -17,12 +17,12 @@ with socket.socket(socket.AF_INET,socket.SOCK_STREAM) as s:
         s.sendall(messaggio.encode("UTF-8"))
         #UTF-8 è la famiglia dei caratteri, utilizzato anche in HTML
         data=s.recv(1024)
-        if operazione=="#list":
+        if operazione=='#list':
             print(data.decode())
             deserialized_dict=json.loads(data)#decodifica dopo aver ricevuto
         elif data.find('#set') != -1:
             deserialized_dict=json.loads(data)#decodifica dopo aver ricevuto
-        elif operazione=="#close":
+        elif operazione=='#close':
             print("Connessione chisa")
             break
         else:
