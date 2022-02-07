@@ -21,10 +21,6 @@ with socket.socket(socket.AF_INET,socket.SOCK_STREAM) as s:
             deserialized_dict=json.loads(data)#decodifica dopo aver ricevuto
         elif operazione.find('#set') != -1:
             deserialized_dict=json.loads(data)
-            if(deserialized_dict=='n'):
-                eserialized_dict="Studente già presente"
-            else:
-                deserialized_dict="Studente inserito"
         elif operazione=='#close':
             print("Connessione chisa")
             break
