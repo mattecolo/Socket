@@ -18,10 +18,13 @@ with socket.socket(socket.AF_INET,socket.SOCK_STREAM) as s:
         #UTF-8 è la famiglia dei caratteri, utilizzato anche in HTML
         data=s.recv(1024)
         if operazione=='#list':
-            print(data.decode())
             deserialized_dict=json.loads(data)#decodifica dopo aver ricevuto
         elif operazione.find('#set') != -1:
-            deserialized_dict=json.loads(data)#decodifica dopo aver ricevuto
+            deserialized_dict=json.loads(data)
+            if(deserialized_dict==0):
+                eserialized_dict="Studente già presente"
+            else:
+                deserialized_dict="Studente inserito"
         elif operazione=='#close':
             print("Connessione chisa")
             break

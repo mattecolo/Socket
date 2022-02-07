@@ -34,10 +34,10 @@ with socket.socket(socket.AF_INET,socket.SOCK_STREAM) as s:
                     inserimento=data.split(delim='/')
                     controllo_pres=inserimento[1]
                     if(controllo_pres in students):
-                        cs.sendall("Studente già inserito".encode("UTF-8"))
+                        cs.sendall(0.encode)
                     else:
                         students[inserimento[1]]=[]
-                        cs.sendall(students.encode("UTF-8"))
+                        cs.sendall(1.encode)
                 elif comando.find('#get') != -1:
                     inserimento=data.split(delim='/')
                     controllo_pres=inserimento[1]
