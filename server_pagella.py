@@ -1,3 +1,4 @@
+from operator import truediv
 import socket
 import json
 
@@ -16,60 +17,55 @@ with socket.socket(socket.AF_INET,socket.SOCK_STREAM) as s:
                 'Nicola Spina':[("Matematica",7.5,2),("Italiano",6,2),("Inglese",4,3),("Storia",8.5,2),("Geografia",8,2)]
                 }
     with clientsocket as cs:
+        print("Connessione da ", address)
         while True:
-            print("Connessione da ", address)
-            while True:
-                data=cs.recv(1024)
-                if not data: #se data è un vettore vuoto risulta false; sennò true/if len(data)==0/se è vuoto esce, sennò continua
-                    break
-                data=data.decode()
-                data=data.strip()
-                data=json.loads(data)
-                comando=data['operazione']
-                print ("[*] Recived: %s" % comando)
-                if comando == '#list':
-                    serialized_stud = json.dumps(students)
+            data=cs.recv(1024)
+            if not data: #se data è un vettore vuoto risulta false; sennò true/if len(data)==0/se è vuoto esce, sennò continua
+                break
+            data=data.decode()
+            data=data.strip()
+            data=json.loads(data)
+            comando=data['operazione']
+            print ("[*] Recived: %s" % comando)
+            if comando == '#list':
+                serialized_stud = json.dumps(students)
+                cs.sendall(serialized_stud.encode("UTF-8"))
+            elif comando.find('#set') != -1:
+                inserimento=comando.split('/')
+                controllo_pres=inserimento[1]
+                if(controllo_pres in students):
+                    cs.sendall("Studente già presente".encode("UTF-8"))
+                else:
+                    students[inserimento[1]]=[]
+                    cs.sendall("Studente inserito".encode("UTF-8"))
+            elif comando.find('#get') != -1:
+                inserimento=comando.split('/')
+                controllo_pres=inserimento[1]
+                if(controllo_pres in students):
+                    serialized_stud = json.dumps(students[controllo_pres])
                     cs.sendall(serialized_stud.encode("UTF-8"))
-                elif comando.find('#set') != -1:
-                    inserimento=data.split(delim='/')
-                    controllo_pres=inserimento[1]
-                    if(controllo_pres in students):
-                        cs.sendall("Studente già presente".encode("UTF-8"))
-                    else:
-                        students[inserimento[1]]=[]
-                        cs.sendall("Studente inserito".encode("UTF-8"))
-                elif comando.find('#get') != -1:
-                    inserimento=data.split(delim='/')
-                    controllo_pres=inserimento[1]
-                    if(controllo_pres in students):
-                        serialized_stud = json.dumps(students[controllo_pres])
-                        cs.sendall(students.encode("UTF-8"))
-                    else:
-                        cs.sendall("Studente non presente".encode("UTF-8"))
-                elif comando.find('#put') != -1:
-                    inserimento=data.split(delim='/')
-                    controllo_pres=inserimento[1]
-                    controllo_materia=inserimento[2]
-                    if(controllo_pres in students):
-                        for alunno,materie in students.items():
-                            if(alunno==controllo_pres):
-                                for i in materie:
-                                    if(controllo_materia == i[0]):
-                                         cs.sendall("Materia già presente".encode("UTF-8"))
-                                    else:
-                                        students[inserimento[1]].append((students[inserimento[2]],students[inserimento[3]],students[inserimento[4]]))
-                                        cs.sendall("Inserimento avvenuto".encode("UTF-8"))
-                    else:
-                        cs.sendall("Studente non presente".encode("UTF-8"))
-                    
-                elif data.find('#exit') != -1:
-                    break
-                    #no
-                elif data.find('#close') != -1:
-                    break
-                    #no
-                print(cs.getpeername())
-                #pp=pprint.PrettyPrinter(indent=4)
-                #pp.pprint(students)
-            cs.close()
-                #Fine parte server
+                else:
+                    cs.sendall("Studente non presente".encode("UTF-8"))
+            elif comando.find('#put') != -1:
+                boole=True
+                inserimento=comando.split('/')
+                controllo_pres=inserimento[1]
+                controllo_materia=inserimento[2]
+                if(controllo_pres in students):
+                    for alunno,materie in students.items():
+                        if(alunno==controllo_pres):
+                            for i in materie:
+                                if(controllo_materia == i[0]):
+                                    cs.sendall("Materia già presente".encode("UTF-8"))
+                                    boole=False
+                            if(boole==True):    
+                                students[inserimento[1]].append((inserimento[2],inserimento[3],inserimento[4]))
+                                cs.sendall("Inserimento avvenuto".encode("UTF-8"))
+                else:
+                    cs.sendall("Studente non presente".encode("UTF-8"))
+            elif comando.find('#close') != -1:
+                break
+            print(cs.getpeername())
+            #pp=pprint.PrettyPrinter(indent=4)
+            #pp.pprint(students)
+            #Fine parte server
