@@ -47,12 +47,12 @@ def ricevi_connessioni(sock_listen):#funzione che accetta la connessione del cli
             print("il thread non si avvia")
             sock_listen.close()
         
-def avvia_server(indirizzo,porta):#funzione che avvia il server
+def avvia_server(INDIRIZZO,PORTA):#funzione che avvia il server
     sock_listen=socket.socket()
     sock_listen.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEADDR,1)
-    sock_listen.bind((indirizzo,porta))
+    sock_listen.bind((INDIRIZZO,PORTA))
     sock_listen.listen(5)
-    print("Server in ascolto su %s." %str((indirizzo,porta)))
+    print("Server in ascolto su %s." %str((INDIRIZZO,PORTA)))
     ricevi_connessioni(sock_listen)
 
 if __name__=='__main__':
