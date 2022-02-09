@@ -19,10 +19,10 @@ def invia_comandi(sock_service):#codice del programma vecchio
         data=sock_service.recv(1024)
         print("Risultato: ",data.decode())#Decode trasforma da un vettore di byte ad un vettore di stringa
 
-def connessione_server(address,port):#funzione che si connette al server e chiama la funzione che permette di inserire i numeri
+def connessione_server(indirizzo,porta):#funzione che si connette al server e chiama la funzione che permette di inserire i numeri
     sock_service=socket.socket()
-    sock_service.connect((SERVER_ADDRESS,SERVER_PORT))
-    print("Connesso a " + str((SERVER_ADDRESS,SERVER_PORT)))
+    sock_service.connect((indirizzo,porta))
+    print("Connesso a " + str((indirizzo,porta)))
     invia_comandi(sock_service)
 
 if __name__=='main':
