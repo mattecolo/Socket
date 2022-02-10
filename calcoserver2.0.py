@@ -5,7 +5,7 @@ import json
 SERVER_ADDRESS = '127.0.0.1'
 SERVER_PORT = 22224
 
-def ricevi_comandi(sock_service,addr_client):#codice programma calcolatrice precedente
+def ricevi_comandi(sock_service):#codice programma calcolatrice precedente
     print("avviato")
     while True:
         data=sock_service.recv(1024)
@@ -55,5 +55,5 @@ def avvia_server(INDIRIZZO,PORTA):#funzione che avvia il server
     print("Server in ascolto su %s." %str((INDIRIZZO,PORTA)))
     ricevi_connessioni(sock_listen)
 
-if __name__=='__main__':
+if __name__=='__main__':#main che 
     avvia_server(SERVER_ADDRESS,SERVER_PORT)

@@ -25,5 +25,5 @@ def connessione_server(INDIRIZZO,PORTA):#funzione che si connette al server e ch
     print("Connesso a " + str((INDIRIZZO,PORTA)))
     invia_comandi(sock_service)
 
-if __name__=='__main__':
+if __name__=='__main__':#funzione main, che avvia la funzione che successivamente avvierà il server
     connessione_server(SERVER_ADDRESS,SERVER_PORT)
