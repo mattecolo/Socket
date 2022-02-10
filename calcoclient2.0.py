@@ -22,8 +22,8 @@ def invia_comandi(sock_service):#codice del programma vecchio
 def connessione_server(INDIRIZZO,PORTA):#funzione che si connette al server e chiama la funzione che permette di inserire i numeri
     sock_service=socket.socket()
     sock_service.connect((INDIRIZZO,PORTA))
-    print("Connesso a " + str((INDIRIZZOf,PORTA)))
+    print("Connesso a " + str((INDIRIZZO,PORTA)))
     invia_comandi(sock_service)
 
-if __name__=='main':
+if __name__=='__main__':
     connessione_server(SERVER_ADDRESS,SERVER_PORT)
