@@ -2,7 +2,7 @@ import socket
 import json
 
 SERVER_ADDRESS = '127.0.0.1'
-SERVER_PORT = 22224
+SERVER_PORT = 22001
 
 def invia_comandi(sock_service):#codice del programma vecchio
     while True:

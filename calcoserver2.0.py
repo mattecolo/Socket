@@ -3,7 +3,7 @@ from threading import Thread
 import json
 
 SERVER_ADDRESS = '127.0.0.1'
-SERVER_PORT = 22224
+SERVER_PORT = 22001
 
 def ricevi_comandi(sock_service):#codice programma calcolatrice precedente
     print("avviato")
@@ -36,7 +36,7 @@ def ricevi_comandi(sock_service):#codice programma calcolatrice precedente
         sock_service.sendall(ris.encode("UTF-8"))
     sock_service.close()
 
-def ricevi_connessioni(sock_listen):#funzione che accetta la connessione del client, al suo interno crea dei thread per eseguire le richieste che arrivano dal client
+def ricevi_connessioni(sock_listen,addr_client):#funzione che accetta la connessione del client, al suo interno crea dei thread per eseguire le richieste che arrivano dal client
     while True:
         sock_service, addr_client = sock_listen.accept()
         print("\nConnessione ricevuta da " + str(addr_client))
