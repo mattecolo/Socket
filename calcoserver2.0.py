@@ -10,7 +10,7 @@ def ricevi_comandi(sock_service,addr_client):#codice programma calcolatrice prec
     while True:
         data=sock_service.recv(1024)
         if not data: #se data è un vettore vuoto risulta false; sennò true/if len(data)==0/se è vuoto esce, sennò continua
-                break
+            break
         data=data.decode()
         data=json.loads(data)
         primoNumero=data['primoNumero']
@@ -55,5 +55,5 @@ def avvia_server(INDIRIZZO,PORTA):#funzione che avvia il server
     print("Server in ascolto su %s." %str((INDIRIZZO,PORTA)))
     ricevi_connessioni(sock_listen)
 
-if __name__=='__main__':#main che 
+if __name__=='__main__':#main
     avvia_server(SERVER_ADDRESS,SERVER_PORT)

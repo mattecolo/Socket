@@ -45,7 +45,7 @@ def genera_richieste(num,address,port):
     #print(operazione)
     messaggio={'primoNumero':primoNumero, 'operazione':operazione, 'secondoNumero':secondoNumero}#mostra i due numeri e l'operazione
     messaggio=json.dumps(messaggio)#Trasforma l'oggetto in stringa
-    print("Invio richesta ",messaggio)#mostra l'operazione
+    print("Invio richiesta ",messaggio)#mostra l'operazione
     s.sendall(messaggio.encode("UTF-8"))
     data=s.recv(1024)
     
@@ -62,14 +62,14 @@ if __name__ == '__main__':
     # 3 ciclo per chiamare NUM_WORKERS volte la funzione genera richieste alla quale passo i parametri (num,SERVER_ADDRESS, SERVER_PORT)
     for cont in range(NUM_WORKERS):
         genera_richieste(cont,SERVER_ADDRESS,SERVER_PORT)#chiamata alla funzione
-    end_time=time.time()#prende il tempo all'inizio dell'esecuzione
+    end_time=time.time()#prende il tempo alla fine dell'esecuzione
     print("Total SERIAL time=", end_time - start_time)#mostra il tempo di esecuzione facendo la sottrazione tra il tempo finale e iniziale
      
     start_time=time.time()#prende il tempo all'inizio dell'esecuzione
     threads=[]#lista dei thread
     # 4 ciclo per chiamare NUM_WORKERS volte la funzione genera richieste tramite l'avvio di un thread al quale passo i parametri args=(num,SERVER_ADDRESS, SERVER_PORT,)
     for num in range(NUM_WORKERS):#per ogni "lavoratore"
-        thread=threading.Thread(target=genera_richieste ,args=(num,SERVER_ADDRESS, SERVER_PORT))#creazione dei thread con target e parametri
+        thread=threading.Thread(target=genera_richieste ,args=(num,SERVER_ADDRESS, SERVER_PORT,))#creazione dei thread con target e parametri
     # ad ogni iterazione appendo il thread creato alla lista threads
         threads.append(thread)#lo aggiungo alla lista
     # 5 avvio tutti i thread
@@ -79,6 +79,19 @@ if __name__ == '__main__':
     end_time=time.time()#prende il tempo alla fine dell'esecuzione
     print("Total THREADS time= ", end_time - start_time)#mostra il tempo di esecuzione facendo la sottrazione tra il tempo finale e iniziale
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    ''''
     start_time=time.time()#prende il tempo all'inizio dell'esecuzione
     process=[]#lista dei processi
     # 7 ciclo per chiamare NUM_WORKERS volte la funzione genera richieste tramite l'avvio di un processo al quale passo i parametri args=(num,SERVER_ADDRESS, SERVER_PORT,)
@@ -92,3 +105,4 @@ if __name__ == '__main__':
     [processo.join() for processo in process]#con join il programma attende la fine dei processi prima di terminare 
     end_time=time.time()#prende il tempo alla fine dell'esecuzione
     print("Total PROCESS time= ", end_time - start_time)#mostra il tempo di esecuzione facendo la sottrazione tra il tempo finale e iniziale
+    '''
