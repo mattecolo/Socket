@@ -61,13 +61,16 @@ def ricevi_comandi2(sock_service,addr_client):
         studente=data['studente']
         pagella=data['pagella']
         media=0
+        totvoti=0
         assenzetot=0
+        cont=0
         print(pagella)
         for voto in pagella[studente]:
-            print(voto)
-            media+=voto[1]
+            totvoti+=voto[1]
+            cont=cont+1
         for assenze in pagella[studente]:
             assenzetot+=assenze[1]
+        media=totvoti/cont
         messaggio={"studente":studente, "media voti":media, "somma assenze":assenzetot}
         messaggio=json.dumps(messaggio)
         sock_service.sendall(messaggio.encode("UTF-8"))
