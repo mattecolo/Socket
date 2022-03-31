@@ -23,21 +23,22 @@ def genera_richieste1(num,address,port):
         sys.exit()
 
     #1. Generazione casuale:
-    listaCognomi=["Colombo","Rossi","Bianchi","Verdi","Neri"]
-    cognome=listaCognomi[random.randint(0,4)]
+    studenti=["Colombo","D'Alba","Di Lorenzo","Falcone","Ghidoli"]
+    materie=["Matematica","Italiano","Inglese","Storia","Geografia"]
+    #   di uno studente (valori ammessi: 5 cognomi a caso tra cui il tuo cognome)
+    numero = random.randint(0,4)
+    studente=studenti[numero]
     #   di una materia (valori ammessi: Matematica, Italiano, inglese, Storia e Geografia)
-    listaMaterie=["Matematica","Italiano","Inglese","Storia","Geografia"]
-    materia=listaMaterie[random.randint(0,4)]
+    numero = random.randint(0,3)
+    materia=materie[numero]
     #   di un voto (valori ammessi 1 ..10)
     voto=random.randint(1,10)
     #   delle assenze (valori ammessi 1..5) 
     assenze=random.randint(1,5)
     #2. comporre il messaggio, inviarlo come json
     #   esempio: {'studente': 'Studente4', 'materia': 'Italiano', 'voto': 2, 'assenze': 3}
-    #3. ricevere il risultato come json: {'studente':'Studente4','materia':'italiano','valutazione':'Gravemente insufficiente'}
-    data=s.recv(1024)
     messaggio = {
-        'studente': cognome,
+        'studente': studente,
         'materia': materia,
         'voto': voto,
         'assenze': assenze
@@ -67,9 +68,9 @@ def genera_richieste2(num,address,port):
         sys.exit()
     #....
     #   1. Generazione casuale di uno studente(valori ammessi: 5 cognomi a caso scelti da una lista)
-    listaCognomi=["Colombo","Rossi","Bianchi","Verdi","Neri"]
+    studenti=["Colombo","D'Alba","Di Lorenzo","Falcone","Ghidoli"]
     numero = random.randint(0,4)
-    studente=listaCognomi[numero]
+    studente=studenti[numero]
     #   Per ognuna delle materie ammesse: Matematica, Italiano, inglese, Storia e Geografia
     #   generazione di un voto (valori ammessi 1 ..10)
     #   e delle assenze (valori ammessi 1..5)
@@ -77,17 +78,19 @@ def genera_richieste2(num,address,port):
     # pagella={"Giuseppe Gullo":[("matematica",9,0),("Italiano",7,3),("inglese",7.5,4),("Storia",7.5,4),("GEografia",5,7)],
     #      "Antonio Barbera":[("matematica",8,1),("Italiano",6,1),("inglese",9.5,0),("Storia",8,2),("GEografia",8,1)],
     #      "Nicola Spina":[("matematica",7.5,2),("Italiano",6,2),("inglese",4,3),("Storia",8.5,2),("GEografia",8,2)]}
-    studPag={"studente": studente, "pagella":[]}
+
+    studenteEPagella={"studente": studente, "pagella":[]}
     materie=["Matematica","Italiano","Inglese","Storia","Geografia"]
     for materia in materie:
         voto=random.randint(1,10)
         assenze=random.randint(1,5)
-        studPag["pagella"].append((materia, voto, assenze))
+        studenteEPagella["pagella"].append((materia, voto, assenze))
+    
     #   esempio: pagella={"Cognome1":[("Matematica",8,1), ("Italiano",6,1), ("Inglese",9.5,3), ("Storia",8,2), ("Geografia",8,1)]}
     #2. comporre il messaggio, inviarlo come json
     messaggio = {
         'studente': studente,
-        'pagella': studPag["pagella"]
+        'pagella': studenteEPagella["pagella"]
     }
     messaggio=json.dumps(messaggio)
     print("Invio richiesta:", messaggio)
@@ -112,10 +115,10 @@ def genera_richieste3(num,address,port):
         sys.exit()
     #   1. Per ognuno degli studenti ammessi: 5 cognomi a caso scelti da una lista
     tabellone = {}
-    listaCognomi=["Colombo","Rossi","Bianchi","Verdi","Neri"]
+    studenti=["Colombo","D'Alba","Di Lorenzo","Falcone","Ghidoli"]
     materie=["Matematica","Italiano","Inglese","Storia","Geografia"]
     votiEAssenze = []
-    for studente in listaCognomi:
+    for studente in studenti:
         for materia in materie:
             voto = random.randint(1,10)
             assenze = random.randint(1,5)

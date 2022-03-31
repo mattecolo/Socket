@@ -1,4 +1,3 @@
-#nome del file : pagellaServerMulti.py
 import socket
 from threading import Thread
 import json
@@ -28,7 +27,7 @@ def ricevi_comandi1(sock_service,addr_client):
         # voto [8..9] Buono
         # voto = 10 Ottimo
         if(voto<4):
-            valutazione = "Gravemente Insufficiente"
+            valutazione = "Gravemente insufficiente"
         elif(voto<=5):
             valutazione = "Insufficiente"
         elif(voto == 6):
